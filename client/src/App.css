@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+  margin: auto;
+  width: 80%;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+}
+
+.Main-TExt {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.name {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.input-txt {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.select {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.address {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .input-txt {
+    width: 100%;
+  }
+}
