@@ -743,7 +743,7 @@
   "sourceMap": "36:213:1:-:0;;;72:1;59:14;;36:213;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "36:213:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;168:74;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;98:64;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;168:74;208:4;231:5;;224:12;;168:74;:::o;98:64::-;150:6;142:5;:14;;;;98:64;:::o;7:77:2:-;44:7;73:5;62:16;;7:77;;;:::o;90:118::-;177:24;195:5;177:24;:::i;:::-;172:3;165:37;90:118;;:::o;214:222::-;307:4;345:2;334:9;330:18;322:26;;358:71;426:1;415:9;411:17;402:6;358:71;:::i;:::-;214:222;;;;:::o;523:117::-;632:1;629;622:12;769:122;842:24;860:5;842:24;:::i;:::-;835:5;832:35;822:63;;881:1;878;871:12;822:63;769:122;:::o;897:139::-;943:5;981:6;968:20;959:29;;997:33;1024:5;997:33;:::i;:::-;897:139;;;;:::o;1042:329::-;1101:6;1150:2;1138:9;1129:7;1125:23;1121:32;1118:119;;;1156:79;;:::i;:::-;1118:119;1276:1;1301:53;1346:7;1337:6;1326:9;1322:22;1301:53;:::i;:::-;1291:63;;1247:117;1042:329;;;;:::o",
   "source": "pragma solidity >=0.4.22 <0.9.0;\r\n\r\ncontract Contacts {\r\n  uint count = 0; // state variable\r\n\r\n  function setCount(uint _count) public{\r\n    count = _count;\r\n  }\r\n\r\n  function getCount() public view returns(uint)\r\n  {\r\n    return count;\r\n  }\r\n\r\n\r\n}",
-  "sourcePath": "C:\\Users\\hp\\Desktop\\development\\TenderApplication\\truffle\\contracts\\contracts.sol",
+  "sourcePath": "C:\\Users\\avcoe\\OneDrive\\Desktop\\tenderapplication\\truffle\\contracts\\contracts.sol",
   "ast": {
     "absolutePath": "project:/contracts/contracts.sol",
     "exportedSymbols": {
@@ -1035,10 +1035,16 @@
       "links": {},
       "address": "0x6A6C6Fe61fF507642A16f59Efedb375763a03aDF",
       "transactionHash": "0x9b9b6c8125f0bb238460d4175c7b51cb76d15d5ad0eb45ae05bafe43ce3e2dc3"
+    },
+    "11155111": {
+      "events": {},
+      "links": {},
+      "address": "0xa780431b570b16FDa444c6454d495D9a03E2524d",
+      "transactionHash": "0xa660cad710e69493012852c9393509c579f7d9677de8e244246211a3675cac70"
     }
   },
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-04-01T19:34:13.677Z",
+  "updatedAt": "2023-04-12T10:12:47.303Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
