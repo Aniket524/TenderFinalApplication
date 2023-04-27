@@ -19,10 +19,12 @@ function Bidder() {
     TenderDesc:'',
     TenderOpeningQuantity:''
   })
-  
+  const [isLoading,setIsLoading]=useState(false)
+
   // Your component logic here
   useEffect(() => {
     const fetchTenders = async () => {
+      setIsLoading(true)
       const tenderCount = await contract.methods.tenderCount().call();
       const newTenders = [];
       for (let i = 1; i <= tenderCount; i++) {
@@ -33,9 +35,11 @@ function Bidder() {
         }
       }
       setAllTEnders(newTenders);
+      setIsLoading(false)
     };
 
     const fetchBids = async () => {
+      setIsLoading(true)
       const bidCount = await contract.methods.bidCount().call();
       const newBids = [];
       for (let i = 1; i <= bidCount; i++) {
@@ -45,9 +49,11 @@ function Bidder() {
         }
       }
       setAllBids(newBids);
+      setIsLoading(false)
     };
 
     const fetchAllocatedBids = async () => {
+      setIsLoading(true)
       const allocatedBidCount = await contract.methods.allocateCount().call();
       const newAllocatedBids = [];
       for (let i = 1; i <= allocatedBidCount; i++) {
@@ -57,10 +63,16 @@ function Bidder() {
         }
       }
       setAllAllocatedBids(newAllocatedBids);
+      setIsLoading(false)
     };
+    window.ethereum.on('accountsChanged', () => {
+      window.location.reload();
+    });
+    setIsLoading(true)
     fetchTenders();
     fetchBids();
     fetchAllocatedBids();
+    setIsLoading(false)
   }, [contract]);
 
   const PlaceBid = async(id) => {
@@ -79,25 +91,29 @@ function Bidder() {
   }
 
   return (
-    // Your component JSX here
     <>
+    {isLoading?<h1>Loading</h1>:<>
+    
     <h2>Your account number is: {account}</h2>
       <h1>You're A Tender Bidder</h1>
       <button onClick={()=>{
          setcreateShowTenderTab(true);
          setcreateShowBidTab(false);
          setcreateShowAllocatedBidTab(false);
+         setIsBidOpen(false);
       }}
       >Show All Tenders</button>
       <button onClick={()=>{
          setcreateShowTenderTab(false);
          setcreateShowBidTab(true);
          setcreateShowAllocatedBidTab(false);
+         setIsBidOpen(false);
       }}>Show All Bids</button>
       <button onClick={()=>{
          setcreateShowTenderTab(false);
          setcreateShowBidTab(false);
          setcreateShowAllocatedBidTab(true);
+         setIsBidOpen(false);
       }}>My Allocated Bids</button>
       <br/>
 
@@ -124,8 +140,8 @@ function Bidder() {
                   <td>{tender[1]}</td>
                   <td>{tender[2]}</td>
                   <td>{tender[3]}</td>
-                  <td><a href={tender[6]} target='self'>Go To File</a></td>
-                  <td><button onClick={()=>PlaceBid(tender[0])}>Bid</button></td>
+                  <td><a href={`${tender[6]}`} target='self'>Go To File</a></td>
+                  <td>{tender[5]==0?<button onClick={()=>PlaceBid(tender[0])}>Bid</button>:null}</td>
                 </tr>
               ))}
             </tbody>
@@ -145,10 +161,17 @@ function Bidder() {
         Link:<input type="text" onChange={(e) => {setBidLink(e.target.value);}}/>
         Enter Your Bid:<input type='Number' onChange={(e)=>setBidAmmount(e.target.value)}/>
         <button onClick={async()=>{
-            contract.methods.createBid(tenderDetails.TenderID,bidAmmount,bidLink).send({from:account}).then(()=>{
-              setIsBidOpen(false)
-              setcreateShowTenderTab(true);
-            })
+            if(bidAmmount==='' && bidAmmount==='')
+            {
+              alert("Please Enter Bid details");
+            }
+            else{
+              contract.methods.createBid(tenderDetails.TenderID,bidAmmount,bidLink).send({from:account}).then(()=>{
+                setIsBidOpen(false)
+                setcreateShowTenderTab(true);
+              }).then(()=>{alert("Bid Placed SuccessFully")})
+              .then(()=>{window.location.reload()})
+            }
         }}>Submit</button>
         <button onClick={()=>{setIsBidOpen(false)
         setcreateShowTenderTab(true);
@@ -218,6 +241,7 @@ function Bidder() {
       ) : (
         <></>
       )}
+      </>}
     </>
   );
 }

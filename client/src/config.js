@@ -1,4 +1,5 @@
-export const contractAddress= '0x64eBd3370af04f0671D74C2827696eD6ce8CBe43';
+/*Sepolia Testnet Conctract Address*/ export const contractAddress= '0x9c9b6907EA99639e1BD38656aB62314347FC6245';
+/*Ganacge Testnet Contract Address*/// export const contractAddress= '0xcB7eCA53379012d2b9Fd04636C4D5a358905007e';
 export const abi =  [
   {
     "inputs": [],
