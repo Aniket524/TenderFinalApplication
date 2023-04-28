@@ -1,15 +1,23 @@
 .App {
   text-align: center;
   margin: auto;
-  width: 80%;
-  padding: 20px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
+  width: 85%;
+  height: 100%;
+  padding: 100px;
+  padding-top: 10px;
+  /* border: 1px solid #ddd; */
+  /* border-radius: 10px; */
 }
 
 .Main-TExt {
   font-size: 36px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+.slogan{
+  /* font-size: small; */
+  margin-top: 0px;
 }
 
 .name {
@@ -46,7 +54,7 @@ button {
 
 .address {
   font-size: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 100px;
 }
 
 @media only screen and (max-width: 600px) {

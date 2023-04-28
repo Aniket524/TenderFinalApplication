@@ -3,6 +3,7 @@ import { tenderContract } from "../contract";
 import { UserContext } from "../App";
 import { useEffect } from "react";
 import './Uploader.css'
+import {MdOutlineNotificationImportant} from 'react-icons/md'
 
 const Uploader = () => {
   const { account, contract } = useContext(UserContext);
@@ -21,7 +22,7 @@ const Uploader = () => {
   const [isLoading,setIsLoading]=useState(false)
 
   const createTender = async () => {
-    if(TenderName==='' && TenderDesc==='' && TenderQty===''&&tenderLink==='')
+    if(TenderName==='' && TenderDesc==='' && TenderQty==='' && tenderLink==='')
     {
       alert("Please Enter The Details")
     }
@@ -108,8 +109,8 @@ const Uploader = () => {
   return (
     <div>{isLoading?<>Loading</>:
     <>
-      <h2>Your account number is: {account}</h2>
-      <h1>You're A Tender Organizer</h1>
+      <h3>Your account number is: <span style={{ color: '#FFFFFF', backgroundColor: '#1c2237', padding: '5px' }}>{account}</span></h3>
+      <h4>You're A Tender Organizer</h4>
       <button
         onClick={() => {
           setcreateTenderTab(true);
@@ -164,8 +165,8 @@ const Uploader = () => {
       {isLoading?<>Loading</>:<></>}
       {createTenderTab ? (
         <div className="createTender">
-        <p className="createTender-heading">
-          For any file upload, please upload file on the given website and share the link with us: 
+        <p className="createTender-heading" style={{ color: 'red', fontWeight: 'bold' }}>IMPORTANT<MdOutlineNotificationImportant/>: 
+          Please Share Link Of Your Required Documents || You Can Refer Given Website: 
           <a href="https://filebin.net/" target="self" className="createTender-link">Go to the site</a>
         </p>
         
@@ -236,7 +237,7 @@ const Uploader = () => {
             <th>Tender ID</th>
             <th>Tender Name</th>
             <th>Tender Description</th>
-            <th>Quantity</th>
+            <th>Quantity ₹</th>
             <th>Is Allocated?</th>
           </tr>
         </thead>
@@ -246,8 +247,8 @@ const Uploader = () => {
               <td>{tender[0]}</td>
               <td>{tender[1]}</td>
               <td>{tender[2]}</td>
-              <td>{tender[3]}</td>
-              <td>{tender[5] === 0 ? "No" : "Yes"}</td>
+              <td>{`${tender[3]} ₹`}</td>
+              <td>{tender[5] === 0 ? "Yes" : "No"}</td>
             </tr>
           ))}
         </tbody>
@@ -267,7 +268,7 @@ const Uploader = () => {
                 <th>Tender ID</th>
                 <th>Tender NAME</th>
                 <th>BIDDER ADDRESS</th>
-                <th>BID AMOUNT</th>
+                <th>BID AMOUNT ₹</th>
                 <th>Bid File</th>
                 <th>Allocate?</th>
               </tr>
@@ -279,7 +280,7 @@ const Uploader = () => {
                   <td>{bid[1]}</td>
                   <td>{bid[2]}</td>
                   <td>{bid[4]}</td>
-                  <td>{bid[3]}</td>
+                  <td>{`${bid[3]} ₹`}</td>
                   <td><a href={`${bid[7]}`} target='self'>Go To File</a></td>
                   <td><button onClick={()=>allocateBid(bid[1],bid[0])}>Allocate</button></td>
                 </tr>
@@ -301,7 +302,7 @@ const Uploader = () => {
                 <th>Tender NAME</th>
                 <th>UPLOADER ADDRESS</th>
                 <th>BIDDER ADDRESS</th>
-                <th>BID AMOUNT</th>
+                <th>BID AMOUNT ₹</th>
               </tr>
             </thead>
             <tbody>
@@ -312,7 +313,7 @@ const Uploader = () => {
                   <td>{abid[2]}</td>
                   <td>{abid[5]}</td>
                   <td>{abid[6]}</td>
-                  <td>{abid[4]}</td>
+                  <td>{`${abid[4]} ₹`}</td>
                   {/* <td><button onClick={allocateBid(bid[1],bid[0])}>Allocate</button></td> */}
                 </tr>
               ))}

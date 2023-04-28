@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { UserContext } from '../App';
 import { useEffect,useState } from 'react';
+import {MdOutlineNotificationImportant} from 'react-icons/md'
 
 function Bidder() {
   const { account, contract } = useContext(UserContext);
@@ -94,8 +95,8 @@ function Bidder() {
     <>
     {isLoading?<h1>Loading</h1>:<>
     
-    <h2>Your account number is: {account}</h2>
-      <h1>You're A Tender Bidder</h1>
+    <h3>Your account number is: <span style={{ color: '#FFFFFF', backgroundColor: '#1c2237', padding: '5px' }}>{account}</span></h3>
+      <h4>You're A Bidder</h4>
       <button onClick={()=>{
          setcreateShowTenderTab(true);
          setcreateShowBidTab(false);
@@ -121,16 +122,16 @@ function Bidder() {
 
 {createShowTenderTab ? (
         <>
-          <h1 style={{ textAlign: "center" }}>Showing All Tenders</h1>
+          <h1 style={{ textAlign: "center" }}>Tender List</h1>
           <table className="table table-hover">
             <thead>
               <tr>
                 <th>Tender ID</th>
                 <th>Tender Name</th>
                 <th>Tender Description</th>
-                <th>Quantity</th>
+                <th>Quantity in ₹</th>
                 <th>Tender Detailed File</th>
-                <th>Bid?</th>
+                <th>Make Bid</th>
               </tr>
             </thead>
             <tbody>
@@ -139,7 +140,7 @@ function Bidder() {
                   <td>{tender[0]}</td>
                   <td>{tender[1]}</td>
                   <td>{tender[2]}</td>
-                  <td>{tender[3]}</td>
+                  <td>{`${tender[3]} ₹`}</td>
                   <td><a href={`${tender[6]}`} target='self'>Go To File</a></td>
                   <td>{tender[5]==0?<button onClick={()=>PlaceBid(tender[0])}>Bid</button>:null}</td>
                 </tr>
@@ -152,18 +153,33 @@ function Bidder() {
       )}
       {
         isBidOpen ? <>
-        Going To Placing The Bid <br/>
-        For Any File Upload Please upload File On Given website and share the link with us <a href="https://filebin.net/" target="self">Go To The Site</a>
+       <p className="createTender-heading" style={{ color: 'red', fontWeight: 'bold' ,marginBottom:'-15px'}}>IMPORTANT<MdOutlineNotificationImportant/>: 
+          Please Share Link Of Your Required Documents || You Can Refer Given Website: 
+          <a href="https://filebin.net/" target="self" className="createTender-link">Go to the site</a></p>
         <br/>
-        Tender Name: {tenderDetails.TenderName}<br/>
-        Tender Description: {tenderDetails.TenderDesc}<br/>
-        Tender Quantity: {tenderDetails.TenderOpeningQuantity}<br/>
-        Link:<input type="text" onChange={(e) => {setBidLink(e.target.value);}}/>
-        Enter Your Bid:<input type='Number' onChange={(e)=>setBidAmmount(e.target.value)}/>
+        <div className='tender-details' style={{ backgroundColor: '#f1f1f1', padding: '10px', borderRadius: '5px' ,margin:"0px 250px 45px 250px"}}>
+  <p style={{ fontSize: '18px', fontWeight: 'normal', margin: '0' }}>
+    Tender Name: <span style={{ fontWeight: 'bold' }}>{tenderDetails.TenderName}</span>
+  </p>
+  <p style={{ fontSize: '16px', margin: '0' }}>
+    Tender Description: <span style={{ fontWeight: 'bold' }}>{tenderDetails.TenderDesc}</span>
+  </p>
+  <p style={{ fontSize: '16px', margin: '0' }}>
+    Tender Quantity: <span style={{ fontWeight: 'bold' }}>{tenderDetails.TenderOpeningQuantity} ₹</span>
+  </p>
+</div>
+
+        <b>{`Documents Link:  `}</b><input type="text" onChange={(e) => {setBidLink(e.target.value);}}/><br/><br/>
+        <b>{`Enter Your Bid:  `}</b><input type='Number' onChange={(e)=>setBidAmmount(e.target.value)}/><br/><br/>
         <button onClick={async()=>{
-            if(bidAmmount==='' && bidAmmount==='')
+            if(bidLink==='' && bidAmmount==='')
             {
               alert("Please Enter Bid details");
+
+            }
+            else if(tenderDetails.TenderOpeningQuantity<bidAmmount)
+            {
+              alert('Bidding Amout Must Be Less Than The Tender Quantity')
             }
             else{
               contract.methods.createBid(tenderDetails.TenderID,bidAmmount,bidLink).send({from:account}).then(()=>{
@@ -181,7 +197,7 @@ function Bidder() {
       }
       {createShowBidTab ? (
         <>
-          <h1>Showing All The Bids</h1>
+          <h1>Bids List</h1>
           <table className="table table-hover">
             <thead>
               <tr>
@@ -189,7 +205,7 @@ function Bidder() {
                 <th>Tender ID</th>
                 <th>Tender NAME</th>
                 <th>BIDDER ADDRESS</th>
-                <th>BID AMOUNT</th>
+                <th>BID AMOUNT ₹</th>
               </tr>
             </thead>
             <tbody>
@@ -199,7 +215,7 @@ function Bidder() {
                   <td>{bid[1]}</td>
                   <td>{bid[2]}</td>
                   <td>{bid[4]}</td>
-                  <td>{bid[3]}</td>
+                  <td>{`${bid[3]} ₹`}</td>
                 </tr>
               ))}
             </tbody>
@@ -220,7 +236,7 @@ function Bidder() {
                 <th>Tender NAME</th>
                 <th>UPLOADER ADDRESS</th>
                 <th>BIDDER ADDRESS</th>
-                <th>BID AMOUNT</th>
+                <th>BID AMOUNT ₹</th>
               </tr>
             </thead>
             <tbody>
@@ -231,7 +247,7 @@ function Bidder() {
                   <td>{abid[2]}</td>
                   <td>{abid[5]}</td>
                   <td>{abid[6]}</td>
-                  <td>{abid[4]}</td>
+                  <td>{`${abid[4]} ₹`}</td>
                   {/* <td><button onClick={allocateBid(bid[1],bid[0])}>Allocate</button></td> */}
                 </tr>
               ))}

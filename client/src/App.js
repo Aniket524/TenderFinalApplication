@@ -118,7 +118,10 @@ import { contractAddress, abi } from './config';
 import './App.css';
 import Bidder from './components/Bidder';
 import Uploader from './components/Uploader';
-
+import MetamaskConnectionMessage from './components/MetamaskConnect'
+import {SiBlockchaindotcom} from 'react-icons/si'
+import {MdOutlineNotificationImportant} from 'react-icons/md'
+ 
 export const UserContext = createContext({
   account: '',
   contract: null,
@@ -138,7 +141,7 @@ function App() {
 
   useEffect(() => {
     async function isNew() {
-      setIsLoading(true)
+      // setIsLoading(true)
       const isUploader = await contract.methods.isUploader(account).call({ from: account });
       const isBidder = await contract.methods.isBidder(account).call({ from: account });
       setIsLoading(false)
@@ -207,18 +210,23 @@ isLoading?
 <h1>Loading</h1>
 :
       <UserContext.Provider value={{ account, contract }}>
-        {account===''?<h1 style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>Please Connect To Metamask</h1>:
-        (<><h1 className="Main-TExt">Welcome To My Tender Application</h1>
+        {account===''?/*<h1 style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>Please Connect To Metamask</h1>*/
+        <MetamaskConnectionMessage />:
+        (<><h1 className="Main-TExt">Tender Shield!! <SiBlockchaindotcom/>
+        </h1><p className='slogan'>A Secure Way To Process Different Kinds Of Tenders....🔐</p>
         {isregistered === 'NO' ? (
           <>
-            <p className="name">And Your Name is?</p>
-            <input type="text" className="input-txt" onChange={(e) => setName(e.target.value)} />
-            <h3 className="address">Your Account Address Is:{account}</h3>
+            <h3 className="address">Your Account Address Is:  <span style={{ color: '#FFFFFF', backgroundColor: '#1c2237', padding: '5px' }}>{account}</span></h3>
+            <label for='name' className="name">Please Enter Your Name:  </label>
+            <input type="text" className="input-txt" name="name" onChange={(e) => setName(e.target.value)} />
 
             <div>
-              <h3 className="select">Are You A ?</h3>
+              <h3 className="select">Select Your Type 🤔</h3>
+              <p>(Tender Organizer - For Tender Creators || Bidder - For Bidders)</p>
+              <p style={{ color: 'red', fontWeight: 'bold' }}>IMPORTANT<MdOutlineNotificationImportant/>: Blockchain is immutable, so please enter valid data.
+    </p>
               <div>
-                <button onClick={SetUploader}>Uploader</button>
+                <button onClick={SetUploader}>Tender Organizer</button>
                 <button onClick={SetBidder}>Bidder</button>
               </div>
             </div>
